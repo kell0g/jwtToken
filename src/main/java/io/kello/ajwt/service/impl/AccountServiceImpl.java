@@ -30,7 +30,6 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	
 	// Sign up
 	@Transactional
 	@Override
@@ -38,7 +37,6 @@ public class AccountServiceImpl implements AccountService {
 		userRepository.save(account);
 	}
 
-	
 	// Sign in with JWT
 	public String signin(String username, String password) {
 		try {
@@ -53,5 +51,10 @@ public class AccountServiceImpl implements AccountService {
 	// Authorization using JWT
 	public Account whoami(HttpServletRequest req) {
 		return userRepository.findByUsername(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
+	}
+
+	// Refresh JWT
+	public String refresh(String username) {
+		return jwtTokenProvider.createToken(username, userRepository.findByUsername(username).getRoles());
 	}
 }

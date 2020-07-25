@@ -31,16 +31,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class JwtTokenProvider {
-
-//	@Value("${security.jwt.token.secret-key:secret-key}")
-//	private String secretKey;
-
-	// Keys are generally obtained through key generators, certificates, or various
-	// Identity classes used to manage keys. Keys may also be obtained from key
-	// specifications (transparent representations of the underlying key material)
-	// through the use of a key factory (see KeyFactory).
-	// Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-
 	Key secretKey;
 
 	@Value("${security.jwt.token.expire-length:3600000}")
@@ -72,10 +62,8 @@ public class JwtTokenProvider {
 	}
 
 	public Authentication getAuthentication(String token) {
-		System.err.println("getUserName~~");
 		UserDetails userDetails = userDetailsService.loadUserByUsername(getUsername(token));
 		log.info(userDetails.getUsername());
-		// log.info(userDetails.getAuthorities().forEach(System.out::println));
 
 		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 	}

@@ -1,5 +1,7 @@
 package io.kello.ajwt.service;
 
+import javax.servlet.http.HttpServletRequest;
+
 import io.kello.ajwt.domain.account.Account;
 
 public interface AccountService {
@@ -10,6 +12,8 @@ public interface AccountService {
 	// Sign in with JWT
 	String signin(String username, String password);
 	
-	//Employee whoami(HttpServletRequest req);
+	Account whoami(HttpServletRequest req);
+	
+	String refresh(String username);
 	
 }
